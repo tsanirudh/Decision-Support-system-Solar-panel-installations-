@@ -1,5 +1,6 @@
 'use strict';
-(function() {
+
+function fn1() {
     $(document).ready(function() {
         tableau.extensions.initializeAsync().then(function() {
             showChooseSheetDialog();
@@ -96,4 +97,4 @@
             });
         }
     };
-})();
+};
