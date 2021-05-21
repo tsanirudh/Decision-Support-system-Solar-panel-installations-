@@ -12,7 +12,10 @@
     <script src="http://d3js.org/d3.v6.js"></script>
     <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
     <link rel="stylesheet" href="./style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
     <script src="./logic.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCctqDbYbn7h6F0KIq7tbViAk4S1jgt5U" async></script>
 </head>
 
 <body>
@@ -24,38 +27,45 @@
         </div>
     </div>
 
-
-    <div id="choose_sheet_dialog" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Choose a Sheet from <span class="sheet_name" id="choose_sheet_title"></span></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <centre>
+        <div id="choose_sheet_dialog" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Choose a Sheet from <span class="sheet_name" id="choose_sheet_title"></span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-                </div>
-                <div id="data_t"></div>
-                <div class="modal-body">
-                    <div id="choose_sheet_buttons"></div>
+                    </div>
+                    <div id="data_t"></div>
+                    <div class="modal-body">
+                        <div id="choose_sheet_buttons"></div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </div>
-    </h4>
-    <div>
-        <select id='options'>
-            <option value="30">30%</option>
-            <option value="60">60%</option>
-            <option value="90">90%</option>
-            
-        </select>
-        <br>
-        <button onclick="fn1()">appply</button>
-    </div>
-    <div id='my_Div'></div>
+        </div>
+        </h4>
+        <div>
+            <form>
+                <input type="checkbox" id="bioG">biogas</input><br>
+                <input type="checkbox" id="SolarP">solar panels</input><br>
+                <input type="text" id="P" value="">
+                <input type="text" id="biogkg" value="">
+                <input type="button" value="Submit" onclick="fn1()" />
+                <div id="alert" style="color: red"></div>
+            </form>
+
+            <br>
+            <button onclick="fn1()">appply</button>
+        </div>
+        <div id='my_Div'></div>
+        <div id="map" style="width: 45%; height: 100%; float: left"></div>
+        <div id="pano" style="width: 45%; height: 100%; float: left"></div>
+
 
 
 </body>
+</centre>
 
 </html>
