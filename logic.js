@@ -1,6 +1,5 @@
-'use strict';
-
-function fn1() {
+'use strict';;
+const fn1 = () => {
     $(document).ready(function() {
         tableau.extensions.initializeAsync().then(function() {
             showChooseSheetDialog();
@@ -60,9 +59,15 @@ function fn1() {
                     title: column.fieldName
                 };
             });
-            initMap();
-            var percentage = document.getElementById('P').value;
-            var bio = document.getElementById('biogkg').value;
+            // initMap();
+            var percentage = document.getElementById('perc').value;
+            var cost_per_sqft = document.getElementById('cost').value
+            var sunlight = document.getElementById('sunlight').value;
+            var eff1 = document.getElementById("eff");
+            var efficiency = eff1.options[eff1.selectedIndex].value;
+
+
+            // var bio = document.getElementById('biogkg').value;
             //calculate available area in square meters and calculate other variables
             row.forEach(array => {
                 // current situation
@@ -80,13 +85,11 @@ function fn1() {
                     array[9] = energyusage_elec;
                 };
                 //simulated situation
-                let costforsolar = (((array[4] / (percentage)) * 1.6) + 1000);
-                array[6] = costforsolar;
-                let costforbiogas = (bio) * 50;
-                array[7] = costforbiogas;
+
+                // let costforbiogas = (bio) * 50;
+                // array[7] = costforbiogas;
                 array[5] = Math.floor(Math.random() * 100 + 1900);
                 let A = [4] / array[5];
-                let carbonemissions = 100;
 
             });
 
@@ -95,7 +98,7 @@ function fn1() {
                 E_usage_permonth.push(array2[9]);
             });
             let G_usage_permonth;
-            G_usage_permonth = []
+            G_usage_permonth = [];
             row.forEach(array1 => {
                 G_usage_permonth.push(array1[8]);
             });
@@ -107,87 +110,169 @@ function fn1() {
             let sum_gas_R = ~~sum_gas;
             //money matters
             let cost_energy = (sum_energy_R * .15) * 12;
-            let cost_gas = (sum_gas_R * .92) * 12;
+            let cost_gas = (sum_gas_R * .30) * 12;
 
-            console.log(sum_energy_R);
-            console.log(sum_gas_R);
-            let sum_a;
-            sum_a = []
-            row.forEach(test2 => {
-                sum_a.push(test2[5]);
+
+            console.log(cost_energy);
+            console.log(cost_gas);
+
+            // simulated condition 
+            //available area
+            row.forEach(array => {
+                let available_area = (((array[1] / 100) * percentage));
+                array[10] = available_area;
             });
-            var histGenerator = d3.bin()
-                .domain([0, 1]) // Set the domain to cover the entire intervall [0;]
-                .thresholds(5); // number of thresholds; this will create 19+1 bins
+            //installation cost
+            row.forEach(array => {
+                let installation_cost = (array[10] * cost_per_sqft) + 1000;
+                array[14] = installation_cost;
+            });
+            //energy production per month
+            row.forEach(array => {
+                //kwh per day
+                let wah = (((((array[10] * 1000) / (efficiency) / 10)) * sunlight) / 1000) * 30;
+                array[11] = wah;
+            });
+            //carbon emission permonth in kg
+            row.forEach(array => {
+                let carbonemission_pre = (array[9] * .41);
+                array[12] = carbonemission_pre;
+            });
+            row.forEach(array => {
+                let carbonemission_red = ((array[9] - array[11]) * .41);
+                array[13] = carbonemission_red;
+            });
+            console.log(row)
 
-            var bins = histGenerator(sum_a);
-            console.log(bins);
 
-            var x1 = (sum_a);
+
+
+
+
+
+
+
+            //wah
+            let wah = [];
+            //cost_wah
+
+            let building_age;
+            building_age = [];
+            row.forEach(test2 => {
+                building_age.push(test2[5]);
+            });
+
+
+
+
+
+            var x1 = (building_age);
             var trace1 = {
                 x: x1,
                 type: "histogram",
             };
             let data = [trace1];
-            Plotly.newPlot(`my_Div`, data);
+            Plotly.newPlot(`replace`, data);
 
             let vis2 = [];
             let vis2_t = [];
+
+
+            Date.prototype.addDays = function(days) {
+                var dat = new Date(this.valueOf())
+                dat.setDate(dat.getDate() + days);
+                return dat;
+            }
+
+            function getDates(startDate, stopDate) {
+                var dateArray = new Array();
+                var currentDate = startDate;
+                while (currentDate <= stopDate) {
+                    var day = currentDate.getDate()
+                    var month = currentDate.getMonth() + 1
+                    var year = currentDate.getFullYear()
+                    dateArray.push(day + "/" + month + "/" + year)
+                    currentDate = currentDate.addDays(30);
+                }
+                return dateArray;
+            }
+
+            var dateArray = getDates((new Date()).addDays(2), (new Date()).addDays(1000));
+
+            console.log(dateArray)
+
+            var yearStart = 2000;
+
+            var dummy = [];
+
+            while (dummy.length < dateArray.length) {
+                dummy.push(yearStar);
+            }
+            console.log(dummy);
+
+
+
+
+
+
+
+
+
         });
 
-        let map;
-        let panorama;
+        // let map;
+        // let panorama;
 
-        function initMap() {
-            const berkeley = { lat: 37.869085, lng: -122.254775 };
-            const sv = new google.maps.StreetViewService();
-            panorama = new google.maps.StreetViewPanorama(
-                document.getElementById("pano")
-            );
-            // Set up the map.
-            map = new google.maps.Map(document.getElementById("map"), {
-                center: berkeley,
-                zoom: 16,
-                streetViewControl: false,
-            });
-            // Set the initial Street View camera to the center of the map
-            sv.getPanorama({ location: berkeley, radius: 50 }, processSVData);
-            // Look for a nearby Street View panorama when the map is clicked.
-            // getPanorama will return the nearest pano when the given
-            // radius is 50 meters or less.
-            map.addListener("click", (event) => {
-                sv.getPanorama({ location: event.latLng, radius: 50 }, processSVData);
-            });
-        }
+        // function initMap() {
+        //     const berkeley = { lat: 37.869085, lng: -122.254775 };
+        //     const sv = new google.maps.StreetViewService();
+        //     panorama = new google.maps.StreetViewPanorama(
+        //         document.getElementById("pano")
+        //     );
+        //     // Set up the map.
+        //     map = new google.maps.Map(document.getElementById("map"), {
+        //         center: berkeley,
+        //         zoom: 16,
+        //         streetViewControl: false,
+        //     });
+        //     // Set the initial Street View camera to the center of the map
+        //     sv.getPanorama({ location: berkeley, radius: 50 }, processSVData);
+        //     // Look for a nearby Street View panorama when the map is clicked.
+        //     // getPanorama will return the nearest pano when the given
+        //     // radius is 50 meters or less.
+        //     map.addListener("click", (event) => {
+        //         sv.getPanorama({ location: event.latLng, radius: 50 }, processSVData);
+        //     });
+        // }
 
-        function processSVData(data, status) {
-            if (status === "OK") {
-                const location = data.location;
-                const marker = new google.maps.Marker({
-                    position: location.latLng,
-                    map,
-                    title: location.description,
-                });
-                panorama.setPano(location.pano);
-                panorama.setPov({
-                    heading: 270,
-                    pitch: 0,
-                });
-                panorama.setVisible(true);
-                marker.addListener("click", () => {
-                    const markerPanoID = location.pano;
-                    // Set the Pano to use the passed panoID.
-                    panorama.setPano(markerPanoID);
-                    panorama.setPov({
-                        heading: 270,
-                        pitch: 0,
-                    });
-                    panorama.setVisible(true);
-                });
-            } else {
-                console.error("Street View data not found for this location.");
-            }
-        }
+        // function processSVData(data, status) {
+        //     if (status === "OK") {
+        //         const location = data.location;
+        //         const marker = new google.maps.Marker({
+        //             position: location.latLng,
+        //             map,
+        //             title: location.description,
+        //         });
+        //         panorama.setPano(location.pano);
+        //         panorama.setPov({
+        //             heading: 270,
+        //             pitch: 0,
+        //         });
+        //         panorama.setVisible(true);
+        //         marker.addListener("click", () => {
+        //             const markerPanoID = location.pano;
+        //             // Set the Pano to use the passed panoID.
+        //             panorama.setPano(markerPanoID);
+        //             panorama.setPov({
+        //                 heading: 270,
+        //                 pitch: 0,
+        //             });
+        //             panorama.setVisible(true);
+        //         });
+        //     } else {
+        //         console.error("Street View data not found for this location.");
+        //     }
+        // }
 
         function getSelectedSheet(worksheetName) {
             return tableau.extensions.dashboardContent.dashboard.worksheets.find(function(sheet) {
