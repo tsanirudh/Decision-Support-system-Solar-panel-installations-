@@ -103,18 +103,18 @@ const fn1 = () => {
                 G_usage_permonth.push(array1[8]);
             });
             console.log(E_usage_permonth);
-            console.log(G_usage_permonth);
+            // console.log(G_usage_permonth);
             let sum_energy = (E_usage_permonth.reduce((a, b) => a + b, 0));
-            let sum_gas = (G_usage_permonth.reduce((a, b) => a + b, 0));
-            let sum_energy_R = ~~sum_energy;
-            let sum_gas_R = ~~sum_gas;
+            // let sum_gas = (G_usage_permonth.reduce((a, b) => a + b, 0));
+            // let sum_energy_R = ~~sum_energy;
+            // let sum_gas_R = ~~sum_gas;
             //money matters
-            let cost_energy = (sum_energy_R * .15) * 12;
-            let cost_gas = (sum_gas_R * .30) * 12;
+            // let cost_energy = (sum_energy_R * .15) * 12;
+            // let cost_gas = (sum_gas_R * .30) * 12;
 
 
-            console.log(cost_energy);
-            console.log(cost_gas);
+            // console.log(cost_energy);
+            // console.log(cost_gas);
 
             // simulated condition 
             //available area
@@ -139,33 +139,47 @@ const fn1 = () => {
                 array[12] = carbonemission_pre;
             });
             row.forEach(array => {
-                let carbonemission_red = ((array[9] - array[11]) * .41);
+                let carbonemission_red = (array[11]) * .41;
                 array[13] = carbonemission_red;
             });
-            console.log(row)
+            console.log(row);
 
 
-
-
-
-
-
-
-
-            //wah
-            let wah = [];
-            //cost_wah
-
+            // building age to an array
             let building_age;
             building_age = [];
-            row.forEach(test2 => {
-                building_age.push(test2[5]);
+
+            //energy usage pre per month
+            let energy_usage_pre;
+            let energy_production;
+            let installation_C_A;
+            let carbon_emission_pre;
+            let carbon_emission_post;
+            energy_usage_pre = [];
+            energy_production = [];
+            installation_C_A = [];
+            carbon_emission_pre = [];
+            carbon_emission_post = [];
+
+
+            row.forEach(array => {
+                building_age.push(array[5]);
+                energy_usage_pre.push(array[9]);
+                energy_production.push(array[11]);
+                installation_C_A.push(array[14]);
+                carbon_emission_pre.push(array[12]);
+                carbon_emission_post.push(array[13]);
+
             });
 
 
+            //testing cumilative
 
 
 
+
+
+            //plot plotly histogram
             var x1 = (building_age);
             var trace1 = {
                 x: x1,
@@ -200,24 +214,53 @@ const fn1 = () => {
             var dateArray = getDates((new Date()).addDays(2), (new Date()).addDays(1000));
 
             console.log(dateArray)
+                //cumulative function
+            const cumulativeSum = (sum => value => sum += value)(0);
 
-            var yearStart = 2000;
+            //cumilative energy usage
+
+
+            // energy_usage_pre = [];
+            // energy_production = [];
+            // installation_C_A = [];
+            // carbon_emission_pre = [];
+            // carbon_emission_post= [];
+
+            // let sum_energy = (E_usage_permonth.reduce((a, b) => a + b, 0));
+            // function to calculate total _sum of abcccc   
+            function sum_a(a) {
+                let A;
+                A = (a.reduce((a, b) => a + b, 0));
+                return A;
+            }
+
+            function cumulative_add(cumi_array) {
+                while (cumi_array.length < dateArray.length) {
+
+                    cumi_array.push(yearStart.map(cumulativeSum));
+                }
+
+            }
+
+            let energy_usage_pre_s = sum(energy_usage_pre);
+            let energy_production_s = sum(energy_production)
+            let installation_C_A_s = sum(installation_C_A);
+            let carbon_emission_pre_s = sum(carbonemission_pre);
+            let carbon_emission_post_s = sum(carbon_emission_post);
+
+            energy_usage_pre_s = sum_a(energy_usage_pre);
+
+            console.log(energy_usage_pre_s);
+
+            var yearStart = [2000];
 
             var dummy = [];
+            dummy[0] = yearStart;
 
-            while (dummy.length < dateArray.length) {
-                dummy.push(yearStar);
-            }
+
+
+
             console.log(dummy);
-
-
-
-
-
-
-
-
-
         });
 
         // let map;
