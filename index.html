@@ -20,13 +20,76 @@
 </head>
 
 <body>
-    <div class="form-body">
-        <div id="selected_marks" class="form-body">
-            <h4>
-                Selected buildings in <span class="sheet_name" id="choose_sheet_title"></span>
-            </h4>
+
+    <div class="grid-container">
+        <div class="Options" id="options">
+            <div class="form-items">
+                <h3>Please enter the details</h3>
+                <p>Fill in the data below.</p>
+                <div class="col-md-12">
+                    <input class="form-control" type="number" name="percentage" placeholder="Enter percentage of area" id="perc" required>
+
+                </div>
+
+                <div class="col-md-12">
+                    <input class="form-control" id="sunlight" type="number" name="light" placeholder="Enter avg sunlight" required>
+
+                </div>
+
+                <div class="col-md-12">
+                    <select class="form-select mt-3" id="eff">
+                                          <option selected disabled value="">seleted s panel efficiency</option>
+                                          <option value="20">20%</option>
+                                          <option value="30">30%</option>
+                                          <option value="40">40%</option>
+                                   </select>
+
+                </div>
+
+
+                <div class="col-md-12">
+                    <input class="form-control" id="cost" type="text" name="name" placeholder="enter cost" required id="cost">
+
+                </div>
+                <div class="form-button mt-3">
+                    <button id="submit" type="submit" class="btn btn-primary" onclick="fn1()">Apply values and simulate</button>
+                </div>
+                </form>
+            </div>
+
+
         </div>
+
+
+
+
+
+
+
+
     </div>
+    <div class="Area" id="Area">
+
+        <h4>
+            Selected buildings in <span class="sheet_name" id="choose_sheet_title"></span>
+        </h4>
+
+    </div>
+
+    <div class="visu" id="visu">
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
 
     <centre>
         <div id="choose_sheet_dialog" class="modal fade" tabindex="-1" role="dialog">
@@ -47,71 +110,12 @@
 
         </div>
         </h4>
-        <div class="replace" id="replace">
-
-
-            <div class="form-body">
-                <div class="row">
-                    <div class="form-holder">
-                        <div class="form-content">
-                            <div class="form-items">
-                                <h3>Please enter the details</h3>
-                                <p>Fill in the data below.</p>
-                                <div class="col-md-12">
-                                    <input class="form-control" type="number" name="percentage" placeholder="Enter percentage of area" id="perc" required>
-
-                                </div>
-
-                                <div class="col-md-12">
-                                    <input class="form-control" id="sunlight" type="number" name="light" placeholder="Enter avg sunlight" required>
-
-                                </div>
-
-                                <div class="col-md-12">
-                                    <select class="form-select mt-3" id="eff">
-                                              <option selected disabled value="">seleted s panel efficiency</option>
-                                              <option value="20">20%</option>
-                                              <option value="30">30%</option>
-                                              <option value="40">40%</option>
-                                       </select>
-
-                                </div>
-
-
-                                <div class="col-md-12">
-                                    <input class="form-control" id="cost" type="text" name="name" placeholder="enter cost" required id="cost">
-
-                                </div>
+        <div class="" id="test">
 
 
 
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                                    <label class="form-check-label">I confirm that all data are correct</label>
-                                    <div class="invalid-feedback">Please confirm that the entered data are all correct!</div>
-                                </div>
 
 
-                                <div class="form-button mt-3">
-                                    <button id="submit" type="submit" class="btn btn-primary" onclick="fn1()">Register</button>
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <br>
-            <button onclick="fn1()">appply</button>
-        </div>
-        <div id="results">
-
-        </div>
-        <div id='my_Div'></div>
-        <div id="map" style="width: 45%; height: 100%; float: left"></div>
-        <div id="pano" style="width: 45%; height: 100%; float: left"></div>
 
 
 

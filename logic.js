@@ -76,12 +76,12 @@ const fn1 = () => {
                 if (array[5] < 1950) {
                     let energyusage_gas = (array[1] * 190);
                     array[8] = energyusage_gas;
-                    let energyusage_elec = (array[1] * 22);
+                    let energyusage_elec = (array[1] * 5);
                     array[9] = energyusage_elec;
                 } else {
                     let energyusage_gas = (array[1] * 250);
                     array[8] = energyusage_gas;
-                    let energyusage_elec = (array[1] * 30);
+                    let energyusage_elec = (array[1] * 7);
                     array[9] = energyusage_elec;
                 };
                 //simulated situation
@@ -186,7 +186,7 @@ const fn1 = () => {
                 type: "histogram",
             };
             let data = [trace1];
-            Plotly.newPlot(`replace`, data);
+            Plotly.newPlot(`visu`, data);
 
             let vis2 = [];
             let vis2_t = [];
@@ -237,26 +237,26 @@ const fn1 = () => {
 
             ///new test function for cumulative functon
 
-            function cumsum(arr) {
+            const cumsum = arr => {
                 let sum = 0;
                 for (var i = 0; i < arr.length; ++i) {
                     sum += arr[i]
                 }
                 return sum
-            }
+            };
 
-            function cumulative_add(initialArray) {
+            const cumulative_add = initialArray => {
                 while (initialArray.length < dateArray.length) {
                     initialArray.push(cumsum(initialArray))
                 }
                 return initialArray
-            }
+            };
 
 
 
+            //arrays and more final stuff
 
-
-            let energy_usage_pre_s = [(sum_a(energy_usage_pre)) / 100000];
+            let energy_usage_pre_s = [(sum_a(energy_usage_pre)) / 1000];
             let energy_production_s = [(sum_a(energy_production)) / 1000];
             let installation_C_A_s = [sum_a(installation_C_A) / 1000];
             let carbon_emission_pre_s = [(sum_a(carbon_emission_pre)) / 1000];
@@ -266,11 +266,41 @@ const fn1 = () => {
             console.log(carbon_emission_post_s);
             let energy_usage_pre_s_C = cumulative_add(energy_usage_pre_s);
             let energy_production_s_C = cumulative_add(energy_production_s)
-            let installation_C_A_s_C = cumulative_add(installation_C_A_s);
             let carbon_emission_pre_s_C = cumulative_add(carbon_emission_pre_s);
             let carbon_emission_post_s_C = cumulative_add(carbon_emission_post_s);
             console.log(energy_usage_pre_s_C);
             console.log(energy_production_s_C);
+            console.log(carbon_emission_post_s_C);
+
+
+            // create arrays for visualization
+            //function to combine arrays and date
+            function combine(array_C, array_N) {
+                for (var i = 0; i < array_C.length; i++) {
+                    array_N.push([dateArray[i], array_C[i]]);
+                }
+                return array_N;
+            };
+
+            vis_array_energy_pre = [combine(energy_usage_pre_s_C, test_array)];
+            vis_array_energy_pro = [combine(energy_production_s_C, test_array)];
+            vis_array_emission_pre = [combine(carbon_emission_pre_s_C, test_array)];
+            vis_array_emission_red = [combine(carbon_emission_post_s_C, test_array)];
+
+
+
+
+
+
+            //visulisation 
+
+            //money that can be saved
+
+            //percentage cover
+
+
+
+
         });
 
         // let map;
