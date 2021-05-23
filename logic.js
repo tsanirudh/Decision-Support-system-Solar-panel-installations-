@@ -191,7 +191,7 @@ const fn1 = () => {
             let vis2 = [];
             let vis2_t = [];
 
-
+            //dummy date
             Date.prototype.addDays = function(days) {
                 var dat = new Date(this.valueOf())
                 dat.setDate(dat.getDate() + days);
@@ -215,7 +215,7 @@ const fn1 = () => {
 
             console.log(dateArray)
                 //cumulative function
-            const cumulativeSum = (sum => value => sum += value)(0);
+
 
             //cumilative energy usage
 
@@ -229,38 +229,48 @@ const fn1 = () => {
             // let sum_energy = (E_usage_permonth.reduce((a, b) => a + b, 0));
             // function to calculate total _sum of abcccc   
             function sum_a(a) {
-                let A;
-                A = (a.reduce((a, b) => a + b, 0));
+                let A = [];
+                A.push(a.reduce((a, b) => a + b, 0));
                 return A;
             }
 
-            function cumulative_add(cumi_array) {
-                while (cumi_array.length < dateArray.length) {
 
-                    cumi_array.push(yearStart.map(cumulativeSum));
+            ///new test function for cumulative functon
+
+            function cumsum(arr) {
+                let sum = 0;
+                for (var i = 0; i < arr.length; ++i) {
+                    sum += arr[i]
                 }
-
+                return sum
             }
 
-            let energy_usage_pre_s = sum(energy_usage_pre);
-            let energy_production_s = sum(energy_production)
-            let installation_C_A_s = sum(installation_C_A);
-            let carbon_emission_pre_s = sum(carbonemission_pre);
-            let carbon_emission_post_s = sum(carbon_emission_post);
-
-            energy_usage_pre_s = sum_a(energy_usage_pre);
-
-            console.log(energy_usage_pre_s);
-
-            var yearStart = [2000];
-
-            var dummy = [];
-            dummy[0] = yearStart;
+            function cumulative_add(initialArray) {
+                while (initialArray.length < dateArray.length) {
+                    initialArray.push(cumsum(initialArray))
+                }
+                return initialArray
+            }
 
 
 
 
-            console.log(dummy);
+
+            let energy_usage_pre_s = [(sum_a(energy_usage_pre)) / 100000];
+            let energy_production_s = [(sum_a(energy_production)) / 1000];
+            let installation_C_A_s = [sum_a(installation_C_A) / 1000];
+            let carbon_emission_pre_s = [(sum_a(carbon_emission_pre)) / 1000];
+            let carbon_emission_post_s = [((sum_a(carbon_emission_post))) / 1000];
+            console.log(energy_production_s);
+
+            console.log(carbon_emission_post_s);
+            let energy_usage_pre_s_C = cumulative_add(energy_usage_pre_s);
+            let energy_production_s_C = cumulative_add(energy_production_s)
+            let installation_C_A_s_C = cumulative_add(installation_C_A_s);
+            let carbon_emission_pre_s_C = cumulative_add(carbon_emission_pre_s);
+            let carbon_emission_post_s_C = cumulative_add(carbon_emission_post_s);
+            console.log(energy_usage_pre_s_C);
+            console.log(energy_production_s_C);
         });
 
         // let map;
