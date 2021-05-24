@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
     <title>Solar Panel</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/jq-3.3.1/dt-1.10.18/b-1.5.6/b-colvis-1.5.6/cr-1.5.0/fh-3.1.4/r-2.2.2/sc-2.0.0/datatables.min.css" />
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jq-3.3.1/dt-1.10.18/b-1.5.6/b-colvis-1.5.6/cr-1.5.0/fh-3.1.4/r-2.2.2/sc-2.0.0/datatables.min.js">
@@ -16,52 +16,87 @@
     <link rel="stylesheet" type="text/css" href="./style.css" />
     <script src="./logic.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCctqDbYbn7h6F0KIq7tbViAk4S1jgt5U" async></script>
+
 </head>
 
-<body>
-    <div class="container-fluid">
-        <div id="selected_marks">
-            <h4>
-                Selected buildings in <span class="sheet_name" id="choose_sheet_title"></span>
-            </h4>
+<body background="#0000">
+
+
+    <div class="grid-container">
+        <div class="Title" class="block">
+
+            <center>
+                <h4>
+                    Simulation for your selection of buildings from <span class="sheet_name" id="choose_sheet_title"></span>
+                </h4>
+
+            </center>
+
         </div>
+        <div class="options">
+
+
+
+            <center>
+                <p>Fill in the data below for simulation.</p>
+
+                <input type="text" name="percentage" placeholder="Enter percentage of area" id="perc" required>
+                <input id="sunlight" type="text" name="light" placeholder="Enter avg sunlight" required>
+                <select id="eff">
+                                      <option selected disabled value="">seleted s panel efficiency</option>
+                                      <option value="20">20%</option>
+                                      <option value="30">30%</option>
+                                      <option value="40">40%</option>
+                               </select>
+                <input id="cost" type="text" name="name" placeholder="enter cost" required id="cost">
+                <button id="submit" type="text" class="block" onclick="fn1()">Apply values and simulate</button>
+            </center>
+
+
+        </div>
+        <div class="Buttons">
+            <div class="Building_hist">
+                <button id="Building_hist" type="submit" class="block">Building age summary</button>
+            </div>
+            <div class="carbon_pre">
+                <button id="carbon_pre" type="submit" class="block">Carbon emission_present</button>
+            </div>
+            <div class="carbon_post">
+                <button id="carbon_post" type="submit" class="block">Reduction in carbon emission</button>
+            </div>
+            <div class="savings">
+                <button id="savings" type="submit" class="block">Savings</button>
+            </div>
+            <div class="cost" id="cost">
+                <button id="cost" type="submit" class="block">installation cost</button>
+            </div>
+            <div class="options2" id="options2">
+                <button id="options2" type="submit" class="block">others</button>
+            </div>
+        </div>
+        <div class="vis" id="vis"></div>
     </div>
 
-    <centre>
-        <div id="choose_sheet_dialog" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Choose a Sheet from <span class="sheet_name" id="choose_sheet_title"></span></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+    <div id="choose_sheet_dialog" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Choose a Sheet from <span class="sheet_name" id="choose_sheet_title"></span></h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-                    </div>
-                    <div id="data_t"></div>
-                    <div class="modal-body">
-                        <div id="choose_sheet_buttons"></div>
-                    </div>
+                </div>
+                <div id="data_t"></div>
+                <div class="modal-body">
+                    <div id="choose_sheet_buttons"></div>
                 </div>
             </div>
-
         </div>
-        </h4>
-        <div>
-            <form>
-                <input type="checkbox" id="bioG">biogas</input><br>
-                <input type="checkbox" id="SolarP">solar panels</input><br>
-                <input type="text" id="P" value="">
-                <input type="text" id="biogkg" value="">
-                <input type="button" value="Submit" onclick="fn1()" />
-                <div id="alert" style="color: red"></div>
-            </form>
 
-            <br>
-            <button onclick="fn1()">appply</button>
-        </div>
-        <div id='my_Div'></div>
-        <div id="map" style="width: 45%; height: 100%; float: left"></div>
-        <div id="pano" style="width: 45%; height: 100%; float: left"></div>
+    </div>
+
+
 
 
 

@@ -1,12 +1,101 @@
-h4,
-h5 {
+html,
+body,
+.grid-container {
+    height: 100%;
+    margin: 0;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 0.1fr 1fr 1fr;
+    grid-template-rows: 0.1fr .2fr 2fr;
+    gap: 0px 0px;
+    border: 2px solid #020202;
+    grid-template-areas: "Title Title Title Title" "options options Buttons Buttons" "vis vis vis vis";
+}
+
+.Title {
+    grid-area: Title;
+    background-color: #1167d8;
+    color: white;
+}
+
+.options {
+    grid-area: options;
+    background-color: #1167d8;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: Garamond;
+    color: white;
+}
+
+.Buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas: "Building_hist carbon_pre carbon_post" "savings cost options2";
+    grid-area: Buttons;
+}
+
+.Building_hist {
+    grid-area: Building_hist;
+}
+
+.carbon_pre {
+    grid-area: carbon_pre;
+}
+
+.carbon_post {
+    grid-area: carbon_post;
+}
+
+.savings {
+    grid-area: savings;
+}
+
+.cost {
+    grid-area: cost;
+}
+
+.options2 {
+    grid-area: options2;
+}
+
+.vis {
+    grid-area: vis;
+}
+
+
+/* For presentation only, no need to copy the code below */
+
+.block {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: #1167d8;
+    color: rgb(255, 255, 255);
+    padding: 1px 1px;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: Garamond;
+    cursor: pointer;
     text-align: center;
 }
 
-div.DTS div.dataTables_scrollBody {
-    background: white;
+.block:hover {
+    background-color: #ddd;
+    color: black;
 }
 
-.sheet_name {
-    font-weight: bold;
+input[type=text],
+select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
