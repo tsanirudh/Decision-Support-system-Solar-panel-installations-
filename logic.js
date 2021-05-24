@@ -180,16 +180,7 @@ const fn1 = () => {
 
 
             //plot plotly histogram
-            var x1 = (building_age);
-            var trace1 = {
-                x: x1,
-                type: "histogram",
-            };
-            let data = [trace1];
-            Plotly.newPlot(`visu`, data);
 
-            let vis2 = [];
-            let vis2_t = [];
 
             //dummy date
             Date.prototype.addDays = function(days) {
@@ -206,12 +197,12 @@ const fn1 = () => {
                     var month = currentDate.getMonth() + 1
                     var year = currentDate.getFullYear()
                     dateArray.push(day + "/" + month + "/" + year)
-                    currentDate = currentDate.addDays(30);
+                    currentDate = currentDate.addDays(90);
                 }
                 return dateArray;
             }
 
-            var dateArray = getDates((new Date()).addDays(2), (new Date()).addDays(1000));
+            var dateArray = getDates((new Date()).addDays(2), (new Date()).addDays(365));
 
             console.log(dateArray)
                 //cumulative function
@@ -282,17 +273,110 @@ const fn1 = () => {
                 return array_N;
             };
 
-            vis_array_energy_pre = [combine(energy_usage_pre_s_C, test_array)];
-            vis_array_energy_pro = [combine(energy_production_s_C, test_array)];
-            vis_array_emission_pre = [combine(carbon_emission_pre_s_C, test_array)];
-            vis_array_emission_red = [combine(carbon_emission_post_s_C, test_array)];
+            // vis_array_energy_pre = [combine(energy_usage_pre_s_C, test_array)];
+            // vis_array_energy_pro = [combine(energy_production_s_C, test_array)];
+            // vis_array_emission_pre = [combine(carbon_emission_pre_s_C, test_array)];
+            // vis_array_emission_red = [combine(carbon_emission_post_s_C, test_array)];
+
+
+            // building age vis
+            var x1 = (building_age);
+            var layout1 = {
+                title: {
+                    text: 'Building_age',
+                    font: {
+                        family: 'Georgia',
+                        size: 18,
+                        color: '#000000'
+                    },
+                },
+                showlegend: false,
+                height: 600,
+                width: 600,
+                xaxis: {
+                    title: {
+                        text: 'Date',
+                        font: {
+                            family: 'Georgia',
+                            size: 18,
+                            color: '#000000'
+                        }
+                    },
+                },
+                yaxis: {
+                    title: {
+                        text: 'Count',
+                        font: {
+                            family: 'Georgia',
+                            size: 18,
+                            color: '#000000'
+                        }
+                    }
+                }
+            };
+            var trace1 = {
+                x: x1,
+                type: "histogram",
+            };
+            let plot_building = [trace1];
 
 
 
+            //visulisation carbon emission
 
 
+            var x2 = {
+                x: (dateArray),
+                y: (carbon_emission_post_s_C),
+                mode: 'markers',
+                marker: {
+                    size: (carbon_emission_post_s_C),
+                }
+            };
 
-            //visulisation 
+            var plot_carb_post = [x2];
+
+            var layout2 = {
+                title: {
+                    text: 'Reduction in carbon emission',
+                    font: {
+                        family: 'Georgia',
+                        size: 18,
+                        color: '#000000'
+                    },
+
+
+                },
+                showlegend: false,
+                height: 600,
+                width: 600,
+                xaxis: {
+                    title: {
+                        text: 'Date',
+                        font: {
+                            family: 'Georgia',
+                            size: 18,
+                            color: '#000000'
+                        }
+                    },
+                },
+
+                yaxis: {
+                    title: {
+                        text: 'In tons',
+                        font: {
+                            family: 'Georgia',
+                            size: 18,
+                            color: '#000000'
+                        }
+                    }
+
+                }
+
+            };
+            // plottttssss
+            Plotly.newPlot('visu', plot_carb_post, layout2);
+            Plotly.newPlot(`visu`, plot_building, layout1);
 
             //money that can be saved
 
