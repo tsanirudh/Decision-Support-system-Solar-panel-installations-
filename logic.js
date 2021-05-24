@@ -16,7 +16,7 @@ const fn1 = () => {
         const worksheets = tableau.extensions.dashboardContent.dashboard.worksheets;
 
         worksheets.forEach(function(worksheet) {
-            const button = $("<button type='button' class='btn btn-default btn-block'></button>");
+            const button = $("<button type='button' class='block'></button>");
             button.text(worksheet.name);
 
             button.click(function() {
@@ -33,7 +33,7 @@ const fn1 = () => {
 
     function createButton(buttonTitle) {
         const button =
-            $(`<button type='button' class='btn btn-default btn-block'>
+            $(`<button type='button' class = "block">
       ${buttonTitle}
     </button>`);
 
@@ -42,7 +42,6 @@ const fn1 = () => {
 
     const loadSelectedMarks = worksheetName => {
         const worksheet = getSelectedSheet(worksheetName);
-        $('#seleted_marks_title').text(worksheet.name);
 
         worksheet.getSelectedMarksAsync().then(function(marks) {
             // Get the first DataTable for our selected marks (usually there is just one)
@@ -142,6 +141,10 @@ const fn1 = () => {
                 let carbonemission_red = (array[11]) * .41;
                 array[13] = carbonemission_red;
             });
+            row.forEach(array => {
+                let savings = (array[11]) * .15;
+                array[15] = savings;
+            });
             console.log(row);
 
 
@@ -160,6 +163,7 @@ const fn1 = () => {
             installation_C_A = [];
             carbon_emission_pre = [];
             carbon_emission_post = [];
+            let savings_s = [];
 
 
             row.forEach(array => {
@@ -169,8 +173,10 @@ const fn1 = () => {
                 installation_C_A.push(array[14]);
                 carbon_emission_pre.push(array[12]);
                 carbon_emission_post.push(array[13]);
+                savings_s.push(array[14]);
 
             });
+            console.log(installation_C_A);
 
 
             //testing cumilative
@@ -249,17 +255,20 @@ const fn1 = () => {
 
             let energy_usage_pre_s = [(sum_a(energy_usage_pre)) / 1000];
             let energy_production_s = [(sum_a(energy_production)) / 1000];
-            let installation_C_A_s = [sum_a(installation_C_A) / 1000];
+            let installation_C_A_s = [sum_a(installation_C_A)];
             let carbon_emission_pre_s = [(sum_a(carbon_emission_pre)) / 1000];
             let carbon_emission_post_s = [((sum_a(carbon_emission_post))) / 1000];
+            let savings_sa = [(sum_a(savings_s))];
             console.log(energy_production_s);
+            console.log(installation_C_A_s);
 
             console.log(carbon_emission_post_s);
             let energy_usage_pre_s_C = cumulative_add(energy_usage_pre_s);
             let energy_production_s_C = cumulative_add(energy_production_s)
             let carbon_emission_pre_s_C = cumulative_add(carbon_emission_pre_s);
             let carbon_emission_post_s_C = cumulative_add(carbon_emission_post_s);
-            console.log(energy_usage_pre_s_C);
+            let savings_s_C = cumulative_add(savings_sa);
+            console.log(savings_s_C);
             console.log(energy_production_s_C);
             console.log(carbon_emission_post_s_C);
 
@@ -272,111 +281,294 @@ const fn1 = () => {
                 }
                 return array_N;
             };
-
             // vis_array_energy_pre = [combine(energy_usage_pre_s_C, test_array)];
             // vis_array_energy_pro = [combine(energy_production_s_C, test_array)];
             // vis_array_emission_pre = [combine(carbon_emission_pre_s_C, test_array)];
             // vis_array_emission_red = [combine(carbon_emission_post_s_C, test_array)];
+            // buttons 
+            // var button1 = document.getElementById("carbon_pre_b");
+            // button1.onclick = test4();
 
+            // function test() {
+            //     vis1();
+
+            // };
 
             // building age vis
-            var x1 = (building_age);
-            var layout1 = {
-                title: {
-                    text: 'Building_age',
-                    font: {
-                        family: 'Georgia',
-                        size: 18,
-                        color: '#000000'
-                    },
-                },
-                showlegend: false,
-                height: 600,
-                width: 600,
-                xaxis: {
+            A: buttons_initialize();
+
+            async function buttons_initialize() {
+                document.getElementById("Building_hist").addEventListener("click", function begin() { message(1) });
+                document.getElementById("carbon_pre").addEventListener("click", function begin() { message(5) });
+                document.getElementById("savings").addEventListener("click", function begin() { message(3) });
+                document.getElementById("cost").addEventListener("click", function begin() { message(4) });
+                document.getElementById("carbon_post").addEventListener("click", function begin() { message(2) });
+            };
+
+            function message(a) {
+                if (a == 1) {
+                    Building_hist();
+                } else if (a == 2) {
+                    carbon_post();
+                } else if (a == 3) {
+                    savings();
+
+                } else if (a == 4) {
+                    installationcost();
+
+                } else if (a == 5) {
+                    carbon_pre();
+                }
+
+            };
+
+
+            function Building_hist() {
+
+                var x1 = (building_age);
+                var layout1 = {
                     title: {
-                        text: 'Date',
+                        text: 'Building_age',
                         font: {
                             family: 'Georgia',
                             size: 18,
                             color: '#000000'
-                        }
+                        },
                     },
-                },
-                yaxis: {
-                    title: {
-                        text: 'Count',
-                        font: {
-                            family: 'Georgia',
-                            size: 18,
-                            color: '#000000'
+                    showlegend: false,
+                    height: 350,
+                    width: 800,
+                    xaxis: {
+                        title: {
+                            text: 'Date',
+                            font: {
+                                family: 'Georgia',
+                                size: 18,
+                                color: '#000000'
+                            }
+                        },
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Count',
+                            font: {
+                                family: 'Georgia',
+                                size: 18,
+                                color: '#000000'
+                            }
                         }
                     }
-                }
+                };
+                var trace1 = {
+                    x: x1,
+                    type: "histogram",
+                };
+                let plot_building = [trace1];
+                Plotly.newPlot(`vis`, plot_building, layout1);
             };
-            var trace1 = {
-                x: x1,
-                type: "histogram",
-            };
-            let plot_building = [trace1];
 
 
 
             //visulisation carbon emission
 
+            function carbon_post() {
+                var x2 = {
+                    x: (dateArray),
+                    y: (carbon_emission_post_s_C),
+                    mode: 'markers',
+                    marker: {
+                        size: [20, 40, 60, 80, 100],
+                    }
+                };
 
-            var x2 = {
-                x: (dateArray),
-                y: (carbon_emission_post_s_C),
-                mode: 'markers',
-                marker: {
-                    size: (carbon_emission_post_s_C),
-                }
-            };
+                var plot_carb_post = [x2];
 
-            var plot_carb_post = [x2];
-
-            var layout2 = {
-                title: {
-                    text: 'Reduction in carbon emission',
-                    font: {
-                        family: 'Georgia',
-                        size: 18,
-                        color: '#000000'
-                    },
-
-
-                },
-                showlegend: false,
-                height: 600,
-                width: 600,
-                xaxis: {
+                var layout2 = {
                     title: {
-                        text: 'Date',
+                        text: 'Reduction in carbon emission',
                         font: {
                             family: 'Georgia',
                             size: 18,
                             color: '#000000'
-                        }
-                    },
-                },
+                        },
 
-                yaxis: {
-                    title: {
-                        text: 'In tons',
-                        font: {
-                            family: 'Georgia',
-                            size: 18,
-                            color: '#000000'
+
+                    },
+                    showlegend: false,
+                    height: 350,
+                    width: 800,
+                    xaxis: {
+                        title: {
+                            text: 'Date',
+                            font: {
+                                family: 'Georgia',
+                                size: 18,
+                                color: '#000000'
+                            }
+                        },
+                    },
+
+                    yaxis: {
+                        title: {
+                            text: 'In tons',
+                            font: {
+                                family: 'Georgia',
+                                size: 18,
+                                color: '#000000'
+                            }
                         }
+
                     }
 
-                }
+                };
+                // plottttssss
+                Plotly.newPlot('vis', plot_carb_post, layout2);
+            };
+
+
+
+            function carbon_pre() {
+                var x3 = {
+                    x: (dateArray),
+                    y: (carbon_emission_pre_s_C),
+                    mode: 'markers',
+                    marker: {
+                        size: [20, 40, 60, 80, 100],
+                    }
+                };
+
+                var plot_carb_pre = [x3];
+
+                var layout3 = {
+                    title: {
+                        text: 'Cabon emission _ cumulative',
+                        font: {
+                            family: 'Georgia',
+                            size: 18,
+                            color: '#000000'
+                        },
+
+
+                    },
+                    showlegend: false,
+                    height: 350,
+                    width: 800,
+                    xaxis: {
+                        title: {
+                            text: 'Date',
+                            font: {
+                                family: 'Georgia',
+                                size: 18,
+                                color: '#000000'
+                            }
+                        },
+                    },
+
+                    yaxis: {
+                        title: {
+                            text: 'In tons',
+                            font: {
+                                family: 'Georgia',
+                                size: 18,
+                                color: '#000000'
+                            }
+                        }
+
+                    }
+
+                };
+                // plottttssss
+                Plotly.newPlot('vis', plot_carb_pre, layout3);
+            };
+
+            function savings() {
+                var x3 = {
+                    x: (dateArray),
+                    y: (savings_s_C),
+                    type: 'bar',
+                };
+
+                var savings = [x3];
+
+                var layout3 = {
+                    title: {
+                        text: 'Savings in euro',
+                        font: {
+                            family: 'Georgia',
+                            size: 18,
+                            color: '#000000'
+                        },
+
+
+                    },
+                    showlegend: false,
+                    height: 350,
+                    width: 800,
+                    xaxis: {
+                        title: {
+                            text: 'Date',
+                            font: {
+                                family: 'Georgia',
+                                size: 18,
+                                color: '#000000'
+                            }
+                        },
+                    },
+
+                    yaxis: {
+                        title: {
+                            text: 'Euros',
+                            font: {
+                                family: 'Georgia',
+                                size: 18,
+                                color: '#000000'
+                            }
+                        }
+
+                    }
+
+                };
+                // plottttssss
+                Plotly.newPlot('vis', savings, layout3);
+            };
+
+
+
+            function installationcost() {
+
+                var data = [{
+                    domain: { x: [0, 1], y: [0, 1] },
+                    value: (installation_C_A_s),
+                    title: { text: "total_savings" },
+                    type: "indicator",
+                    mode: "gauge+number",
+                    delta: { reference: 400 },
+                    gauge: { axis: { range: [null, savings_s_C] } }
+                }];
+
+                var layout = { width: 600, height: 400 };
+                Plotly.newPlot('vis', data, layout);
+
 
             };
-            // plottttssss
-            Plotly.newPlot('visu', plot_carb_post, layout2);
-            Plotly.newPlot(`visu`, plot_building, layout1);
+
+
+
+
+            // SAVINGS PLOT
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             //money that can be saved
 
