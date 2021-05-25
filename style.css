@@ -16,13 +16,13 @@ body,
 
 .Title {
     grid-area: Title;
-    background-color: #1167d8;
+    background-color: rgb(17, 13, 41);
     color: white;
 }
 
 .options {
     grid-area: options;
-    background-color: #1167d8;
+    background-color: rgb(17, 13, 41);
     font-size: 18px;
     font-weight: bold;
     font-family: Garamond;
@@ -80,7 +80,7 @@ body,
     width: 100%;
     height: 100%;
     border: none;
-    background-color: #1167d8;
+    background-color: rgb(17, 13, 41);
     color: rgb(255, 255, 255);
     padding: 1px 1px;
     font-size: 18px;

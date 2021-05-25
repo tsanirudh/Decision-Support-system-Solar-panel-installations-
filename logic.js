@@ -301,7 +301,7 @@ const fn1 = () => {
                 document.getElementById("Building_hist").addEventListener("click", function begin() { message(1) });
                 document.getElementById("carbon_pre").addEventListener("click", function begin() { message(5) });
                 document.getElementById("savings").addEventListener("click", function begin() { message(3) });
-                document.getElementById("cost").addEventListener("click", function begin() { message(4) });
+                document.getElementById("cost_1").addEventListener("click", function begin() { message(4) });
                 document.getElementById("carbon_post").addEventListener("click", function begin() { message(2) });
             };
 
@@ -362,6 +362,10 @@ const fn1 = () => {
                 var trace1 = {
                     x: x1,
                     type: "histogram",
+                    line: {
+                        color: 'rgb(0,0,0)',
+                        width: 4
+                    }
                 };
                 let plot_building = [trace1];
                 Plotly.newPlot(`vis`, plot_building, layout1);
@@ -376,9 +380,16 @@ const fn1 = () => {
                 var x2 = {
                     x: (dateArray),
                     y: (carbon_emission_post_s_C),
+                    type: "scatter",
                     mode: 'markers',
                     marker: {
-                        size: [20, 40, 60, 80, 100],
+                        color: ['rgb(128,0,0)', 'rgb(178,34,34)', 'rgb(255,99,71)', 'rgb(255,69,0)'],
+                        opacity: [1, 0.8, 0.6, 0.4],
+                        size: [60, 80, 100, 120],
+                        line: {
+                            color: 'rgb(0,0,0)',
+                            width: 4
+                        }
                     }
                 };
 
@@ -396,8 +407,8 @@ const fn1 = () => {
 
                     },
                     showlegend: false,
-                    height: 350,
-                    width: 800,
+                    height: 500,
+                    width: 750,
                     xaxis: {
                         title: {
                             text: 'Date',
@@ -434,7 +445,13 @@ const fn1 = () => {
                     y: (carbon_emission_pre_s_C),
                     mode: 'markers',
                     marker: {
-                        size: [20, 40, 60, 80, 100],
+                        color: ['rgb(128,0,0)', 'rgb(178,34,34)', 'rgb(255,99,71)', 'rgb(255,69,0)'],
+                        opacity: [1, 0.8, 0.6, 0.4],
+                        size: [40, 60, 80, 100],
+                        line: {
+                            color: 'rgb(0,0,0)',
+                            width: 4
+                        }
                     }
                 };
 
@@ -452,8 +469,8 @@ const fn1 = () => {
 
                     },
                     showlegend: false,
-                    height: 350,
-                    width: 800,
+                    height: 500,
+                    width: 750,
                     xaxis: {
                         title: {
                             text: 'Date',
@@ -482,56 +499,56 @@ const fn1 = () => {
                 Plotly.newPlot('vis', plot_carb_pre, layout3);
             };
 
-            function cost() {
-                var x3 = {
-                    x: (dateArray),
-                    y: (savings_s_C),
-                    type: 'bar',
-                };
+            // function savings() {
+            //     var x3 = {
+            //         x: [(dateArray)],
+            //         y: [(savings_s_C)],
 
-                var savings = [x3];
+            //     };
 
-                var layout3 = {
-                    title: {
-                        text: 'Savings in euro',
-                        font: {
-                            family: 'Georgia',
-                            size: 18,
-                            color: '#000000'
-                        },
+            //     var savings = [x3];
+
+            //     var layout3 = {
+            //         title: {
+            //             text: 'Savings in euro',
+            //             font: {
+            //                 family: 'Georgia',
+            //                 size: 18,
+            //                 color: '#000000'
+            //             },
 
 
-                    },
-                    showlegend: false,
-                    height: 350,
-                    width: 800,
-                    xaxis: {
-                        title: {
-                            text: 'Date',
-                            font: {
-                                family: 'Georgia',
-                                size: 18,
-                                color: '#000000'
-                            }
-                        },
-                    },
+            //         },
+            //         showlegend: false,
+            //         height: 350,
+            //         width: 800,
+            //         xaxis: {
+            //             title: {
+            //                 text: 'Date',
+            //                 font: {
+            //                     family: 'Georgia',
+            //                     size: 18,
+            //                     color: '#000000'
+            //                 }
+            //             },
+            //         },
 
-                    yaxis: {
-                        title: {
-                            text: 'Euros',
-                            font: {
-                                family: 'Georgia',
-                                size: 18,
-                                color: '#000000'
-                            }
-                        }
+            //         yaxis: {
+            //             title: {
+            //                 text: 'Euros',
+            //                 font: {
+            //                     family: 'Georgia',
+            //                     size: 18,
+            //                     color: '#000000'
+            //                 }
+            //             }
 
-                    }
+            //         }
 
-                };
-                // plottttssss
-                Plotly.newPlot('vis', savings, layout3);
-            };
+            //     };
+            //     // plottttssss
+            //     Plotly.newPlot('vis', savings, layout3);
+            // };
 
 
 
@@ -539,7 +556,6 @@ const fn1 = () => {
             function savings() {
                 var data = [{
                     type: "sunburst",
-                    labels: ["month1", "month1", "month1", "month1", "month1"],
                     parents: (dateArray),
                     values: (carbon_emission_pre_s_C),
                     outsidetextfont: { size: 20, color: "#377eb8" },
