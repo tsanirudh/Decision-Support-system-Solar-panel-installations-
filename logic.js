@@ -1,4 +1,4 @@
-'use strict';;
+'use strict';
 const fn1 = () => {
     $(document).ready(function() {
         tableau.extensions.initializeAsync().then(function() {
@@ -314,7 +314,7 @@ const fn1 = () => {
                     savings();
 
                 } else if (a == 4) {
-                    installationcost();
+                    cost();
 
                 } else if (a == 5) {
                     carbon_pre();
@@ -366,6 +366,7 @@ const fn1 = () => {
                 let plot_building = [trace1];
                 Plotly.newPlot(`vis`, plot_building, layout1);
             };
+
 
 
 
@@ -481,7 +482,7 @@ const fn1 = () => {
                 Plotly.newPlot('vis', plot_carb_pre, layout3);
             };
 
-            function savings() {
+            function cost() {
                 var x3 = {
                     x: (dateArray),
                     y: (savings_s_C),
@@ -534,23 +535,34 @@ const fn1 = () => {
 
 
 
-            function installationcost() {
 
+            function savings() {
                 var data = [{
-                    domain: { x: [0, 1], y: [0, 1] },
-                    value: (installation_C_A_s),
-                    title: { text: "total_savings" },
-                    type: "indicator",
-                    mode: "gauge+number",
-                    delta: { reference: 400 },
-                    gauge: { axis: { range: [null, savings_s_C] } }
+                    type: "sunburst",
+                    labels: ["month1", "month1", "month1", "month1", "month1"],
+                    parents: (dateArray),
+                    values: (carbon_emission_pre_s_C),
+                    outsidetextfont: { size: 20, color: "#377eb8" },
+                    leaf: { opacity: 0.4 },
+                    marker: { line: { width: 2 } },
                 }];
 
-                var layout = { width: 600, height: 400 };
+                var layout = {
+                    margin: { l: 0, r: 0, b: 0, t: 0 },
+                    width: 500,
+                    height: 500
+                };
+
+
                 Plotly.newPlot('vis', data, layout);
 
-
             };
+
+
+
+
+
+
 
 
 
@@ -578,6 +590,10 @@ const fn1 = () => {
 
 
         });
+
+
+
+
 
         // let map;
         // let panorama;
