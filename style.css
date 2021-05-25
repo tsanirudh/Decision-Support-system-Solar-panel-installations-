@@ -10,7 +10,7 @@ body,
     grid-template-columns: 1fr 0.1fr 1fr 1fr;
     grid-template-rows: 0.1fr .2fr 2fr;
     gap: 0px 0px;
-    border: 2px solid #020202;
+    border: 2px solid #1167d8;
     grid-template-areas: "Title Title Title Title" "options options Buttons Buttons" "vis vis vis vis";
 }
 
@@ -27,6 +27,9 @@ body,
     font-weight: bold;
     font-family: Garamond;
     color: white;
+    border: 2px;
+    border-style: solid;
+    border-color: rgb(17, 13, 41);
 }
 
 .Buttons {
@@ -36,6 +39,9 @@ body,
     gap: 0px 0px;
     grid-template-areas: "Building_hist carbon_pre carbon_post" "savings cost options2";
     grid-area: Buttons;
+    border: 2px;
+    border-style: solid;
+    border-color: rgb(17, 13, 41);
 }
 
 .Building_hist {
