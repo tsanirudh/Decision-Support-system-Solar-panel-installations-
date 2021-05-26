@@ -173,7 +173,7 @@ const fn1 = () => {
                 installation_C_A.push(array[14]);
                 carbon_emission_pre.push(array[12]);
                 carbon_emission_post.push(array[13]);
-                savings_s.push(array[14]);
+                savings_s.push(array[15]);
 
             });
             console.log(installation_C_A);
@@ -260,7 +260,7 @@ const fn1 = () => {
             let carbon_emission_post_s = [((sum_a(carbon_emission_post))) / 1000];
             let savings_sa = [(sum_a(savings_s))];
             console.log(energy_production_s);
-            console.log(installation_C_A_s);
+            console.log(savings_sa);
 
             console.log(carbon_emission_post_s);
             let energy_usage_pre_s_C = cumulative_add(energy_usage_pre_s);
@@ -303,6 +303,7 @@ const fn1 = () => {
                 document.getElementById("savings").addEventListener("click", function begin() { message(3) });
                 document.getElementById("cost_1").addEventListener("click", function begin() { message(4) });
                 document.getElementById("carbon_post").addEventListener("click", function begin() { message(2) });
+                document.getElementById("print").addEventListener("click", function begin() { message(6) });
             };
 
             function message(a) {
@@ -314,10 +315,12 @@ const fn1 = () => {
                     savings();
 
                 } else if (a == 4) {
-                    cost();
+                    installationcost();
 
                 } else if (a == 5) {
                     carbon_pre();
+                } else if (a == 6) {
+                    print();
                 }
 
             };
@@ -336,8 +339,8 @@ const fn1 = () => {
                         },
                     },
                     showlegend: false,
-                    height: 350,
-                    width: 800,
+                    height: 500,
+                    width: 750,
                     xaxis: {
                         title: {
                             text: 'Date',
@@ -382,6 +385,7 @@ const fn1 = () => {
                     y: (carbon_emission_post_s_C),
                     type: "scatter",
                     mode: 'markers',
+
                     marker: {
                         color: ['rgb(128,0,0)', 'rgb(178,34,34)', 'rgb(255,99,71)', 'rgb(255,69,0)'],
                         opacity: [1, 0.8, 0.6, 0.4],
@@ -390,7 +394,9 @@ const fn1 = () => {
                             color: 'rgb(0,0,0)',
                             width: 4
                         }
+
                     }
+
                 };
 
                 var plot_carb_post = [x2];
@@ -499,18 +505,75 @@ const fn1 = () => {
                 Plotly.newPlot('vis', plot_carb_pre, layout3);
             };
 
-            // function savings() {
-            //     var x3 = {
-            //         x: [(dateArray)],
-            //         y: [(savings_s_C)],
+            function savings() {
+                let S = (savings_s_C[0].toString());
+                let SA = S;
+                let data = [{
+                        type: "indicator",
+                        mode: "number",
+                        value: SA,
+                        delta: { reference: 512, valueformat: ".0f" },
+                        ticker: { showticker: true },
+                        vmax: 500,
+                        domain: { y: [0, 1], x: [0.25, 0.75] },
+                        title: { text: "Savings in euros per 90 days" }
+                    },
 
+                ];
+
+                var layout = { width: 600, height: 450, xaxis: { range: [0, 62] } };
+                Plotly.newPlot('vis', data, layout);
+
+            };
+
+
+
+
+
+
+            function installationcost() {
+                let as = (installation_C_A_s[0].toString());
+                var a = as;
+                var data = [{
+                        type: "indicator",
+                        mode: "number",
+                        value: a,
+                        delta: { reference: 512, valueformat: ".0f" },
+                        ticker: { showticker: true },
+                        vmax: 500,
+                        domain: { y: [0, 1], x: [0.25, 0.75] },
+                        title: { text: "Installation cost in euros" }
+                    },
+
+                ];
+
+                var layout = { width: 600, height: 450, xaxis: { range: [0, 62] } };
+                Plotly.newPlot('vis', data, layout);
+
+            };
+
+
+            // function cost() {
+            //     var x2 = {
+            //         x: (dateArray),
+            //         y: (installation_C_A_s),
+            //         mode: 'markers',
+            //         marker: {
+            //             color: ['rgb(128,0,0)', 'rgb(178,34,34)', 'rgb(255,99,71)', 'rgb(255,69,0)'],
+            //             opacity: [1, 0.8, 0.6, 0.4],
+            //             size: [120],
+            //             line: {
+            //                 color: 'rgb(0,0,0)',
+            //                 width: 4
+            //             }
+            //         }
             //     };
 
-            //     var savings = [x3];
+            //     var plot_carb_post = [x2];
 
-            //     var layout3 = {
+            //     var layout2 = {
             //         title: {
-            //             text: 'Savings in euro',
+            //             text: 'installation cost in Euros',
             //             font: {
             //                 family: 'Georgia',
             //                 size: 18,
@@ -520,62 +583,16 @@ const fn1 = () => {
 
             //         },
             //         showlegend: false,
-            //         height: 350,
-            //         width: 800,
-            //         xaxis: {
-            //             title: {
-            //                 text: 'Date',
-            //                 font: {
-            //                     family: 'Georgia',
-            //                     size: 18,
-            //                     color: '#000000'
-            //                 }
-            //             },
-            //         },
-
-            //         yaxis: {
-            //             title: {
-            //                 text: 'Euros',
-            //                 font: {
-            //                     family: 'Georgia',
-            //                     size: 18,
-            //                     color: '#000000'
-            //                 }
-            //             }
-
-            //         }
+            //         height: 500,
+            //         width: 750,
 
             //     };
             //     // plottttssss
-            //     Plotly.newPlot('vis', savings, layout3);
+            //     Plotly.newPlot('vis', plot_carb_post, layout2);
+
+
+
             // };
-
-
-
-
-            function savings() {
-                var data = [{
-                    type: "sunburst",
-                    parents: (dateArray),
-                    values: (carbon_emission_pre_s_C),
-                    outsidetextfont: { size: 20, color: "#377eb8" },
-                    leaf: { opacity: 0.4 },
-                    marker: { line: { width: 2 } },
-                }];
-
-                var layout = {
-                    margin: { l: 0, r: 0, b: 0, t: 0 },
-                    width: 500,
-                    height: 500
-                };
-
-
-                Plotly.newPlot('vis', data, layout);
-
-            };
-
-
-
 
 
 
@@ -606,6 +623,21 @@ const fn1 = () => {
 
 
         });
+
+        function print() {
+
+            var gd = document.getElementById('vis');
+            gd.on('plotly_relayout', function() {
+                toImage(gd);
+            });
+
+            function toImage(gd) {
+                Plotly.toImage(gd).then((dataURI) => {
+                    console.log(dataURI);
+                });
+            }
+        };
+
 
 
 
